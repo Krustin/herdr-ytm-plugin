@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Mock ytm. MOCK_YTM_STATE: running (default) | down | broken
+# MOCK_YTM_NOW: fixture file for `now`. Calls are logged to MOCK_YTM_LOG.
+[ -n "${MOCK_YTM_LOG:-}" ] && printf '%s\n' "$*" >> "$MOCK_YTM_LOG"
+case "${MOCK_YTM_STATE:-running}" in
+  down) echo "Error: ytm-player is not running. Launch with \`ytm\` first." >&2; exit 1 ;;
+  broken) [ "$1" = now ] && { echo "<html>not json"; exit 0; } ;;
+esac
+case "$1" in
+  now) cat "${MOCK_YTM_NOW:?}" ;;
+  play) echo "Resumed." ;;
+  pause) echo "Paused." ;;
+  next|prev) echo "ok" ;;
+  like) [ "${MOCK_YTM_LIKE_FAIL:-}" = 1 ] && { echo "Error: like failed: 401" >&2; exit 1; }; echo "Liked current track." ;;
+  *) echo "Error: unknown $1" >&2; exit 2 ;;
+esac

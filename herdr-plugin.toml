@@ -1,0 +1,67 @@
+# JLoPlaya — control a running ytm-player (YouTube Music TUI) from herdr.
+#
+# Install: herdr plugin install Krustin/herdr-ytm-plugin
+# Local:   herdr plugin link .
+#
+# The plugin only talks to an already running ytm over its local IPC socket via
+# the `ytm` CLI. It never starts ytm and never touches ~/.config/ytm-player/.
+#
+# herdr plugins cannot declare keybindings: bind these actions yourself in your
+# herdr config.toml with type = "plugin_action" (see README).
+
+id = "jloplaya"
+name = "JLoPlaya"
+version = "0.1.0"
+min_herdr_version = "0.8.0"
+description = "Control a running ytm-player (YouTube Music TUI) from any herdr workspace: play/pause, skip, like, and a now-playing toast."
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "toggle"
+title = "ytm: play/pause"
+contexts = ["global"]
+command = ["bash", "ytm.sh", "toggle"]
+
+[[actions]]
+id = "next"
+title = "ytm: next track"
+contexts = ["global"]
+command = ["bash", "ytm.sh", "next"]
+
+[[actions]]
+id = "prev"
+title = "ytm: previous track"
+contexts = ["global"]
+command = ["bash", "ytm.sh", "prev"]
+
+[[actions]]
+id = "now"
+title = "ytm: show now playing"
+contexts = ["global"]
+command = ["bash", "ytm.sh", "now"]
+
+[[actions]]
+id = "like"
+title = "ytm: like current track"
+contexts = ["global"]
+command = ["bash", "ytm.sh", "like"]
+
+# --- Floating player -----------------------------------------------------------
+# The full ytm TUI lives in a private, invisible tmux server (tmux -L jloplaya);
+# the popup only attaches a tmux client. ctrl+d inside the float (or the open
+# key) hides it; the music keeps playing. Bind `open`, not the pane: `open`
+# makes sure ytm runs first and refuses to start a second ytm when one already
+# runs elsewhere.
+[[actions]]
+id = "open"
+title = "ytm: open floating player"
+contexts = ["global"]
+command = ["bash", "ytm.sh", "open"]
+
+[[panes]]
+id = "player"
+title = "ytm"
+placement = "popup"
+width = "70%"
+height = "60%"
+command = ["bash", "ytm.sh", "attach"]
