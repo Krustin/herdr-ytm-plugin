@@ -167,7 +167,11 @@ like() {
 ytm_is_running() {
   run_ytm now && return 0
   case "$YTM_ERR" in *"not running"*|*"not responding"*) return 1 ;; esac
-  return 0   # some other error: a TUI answered, so treat it as running
+  # Unknown error text (ytm may reword it): fall back to the process list. The
+  # TUI is the one ytm process whose command line ENDS in the ytm script; CLI
+  # calls like `ytm now` carry arguments, and our own tmux launcher line is
+  # excluded. Reads nothing from ytm's config.
+  ps -axo command= 2>/dev/null | grep -E '(^|/)ytm$' | grep -v -q -E '^([^ ]*/)?tmux '
 }
 
 # tmux against the private server only; never the user's own tmux.

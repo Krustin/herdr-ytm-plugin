@@ -18,11 +18,24 @@ and only when none runs yet. The plugin never reads or writes
 
 ## Requirements
 
-- herdr ≥ 0.8.0 (tested with 0.9.5 only), macOS or Linux
-- ytm-player ≥ 2.2 (`ytm` on PATH, e.g. `~/.local/bin/ytm` via pipx)
-- `jq`
-- bash (macOS' stock bash 3.2 is fine)
-- tmux, only for the floating player
+- **herdr ≥ 0.9.5**, macOS or Linux (developed and tested on macOS).
+- **[ytm-player](https://github.com/peternaame-boop/ytm-player)**, tested with
+  **2.2.0**. This plugin is only a remote control; ytm does the actual work:
+  - install it as its README describes (e.g. `pipx install ytm-player`), so that
+    `ytm` is on your PATH (`~/.local/bin` is picked up automatically);
+  - install ytm's own dependency **mpv** (e.g. `brew install mpv`);
+  - sign in once with **`ytm setup`**. Check everything with `ytm doctor`.
+- **jq**
+- **bash** (macOS' stock bash 3.2 is fine)
+- **tmux**, only for the floating player
+
+### How this plugin depends on ytm
+
+It talks to ytm exclusively through ytm's command line: `ytm now`, `play`,
+`pause`, `next`, `prev` and `like`, reading the JSON that `ytm now` prints. That
+output is not a documented, stable API, so a future ytm release could change
+it. If toasts show "unexpected response" or actions fail after a ytm update,
+check `ytm now` by hand and open an issue here with your `ytm --version`.
 
 ## Installation
 
@@ -135,6 +148,9 @@ YTM_FLOAT_HEIGHT="60%"
 
 ## Troubleshooting
 
+- **Float opens and closes immediately / "ytm did not come up"** — ytm itself
+  fails to start. Run `ytm` in a normal shell to see why (often: not signed in,
+  run `ytm setup`; or mpv missing, see `ytm doctor`).
 - **"ytm not running"** — start ytm-player in a pane (`ytm`) or use the
   floating player. The control actions never start ytm themselves. `ytm now`
   in a shell should print JSON.
