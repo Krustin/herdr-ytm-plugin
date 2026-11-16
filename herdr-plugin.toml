@@ -11,9 +11,9 @@
 
 id = "jloplaya"
 name = "JLoPlaya"
-version = "0.1.0"
+version = "0.1.1"
 min_herdr_version = "0.9.5"
-description = "Control a running ytm-player (YouTube Music TUI) from any herdr workspace: play/pause, skip, like, and a now-playing toast."
+description = "Control ytm-player (YouTube Music TUI) from any herdr workspace: play/pause, skip, like, now-playing toasts, and a floating player that keeps playing when hidden."
 platforms = ["linux", "macos"]
 
 [[actions]]
