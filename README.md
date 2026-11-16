@@ -18,7 +18,8 @@ and only when none runs yet. The plugin never reads or writes
 
 ## Requirements
 
-- **herdr ≥ 0.9.5**, macOS or Linux (developed and tested on macOS).
+- **herdr ≥ 0.9.5** on **macOS or Linux** (developed and tested on macOS).
+  **Windows is not supported yet** — see [the roadmap](docs/roadmap/01-windows-support.md).
 - **[ytm-player](https://github.com/peternaame-boop/ytm-player)**, tested with
   **2.2.0**. This plugin is only a remote control; ytm does the actual work:
   - install it as its README describes (e.g. `pipx install ytm-player`), so that

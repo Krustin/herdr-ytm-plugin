@@ -1,7 +1,9 @@
 # Roadmap
 
-> Adoptable stub from cartograph `docs-standard`. Every healthy project in the atlas keeps a roadmap
-> system — one file per initiative, not a single monolithic list.
+One file per initiative (`NN-<initiative>.md`): goal, why, rough steps, status.
+Shipped items move to a decision record or the changelog; this folder is about
+*what's next*.
 
-- `NN-<initiative>.md` — one forward item each: goal, why, rough steps, status.
-- Keep shipped items or move them to a decision record / changelog; keep this folder about *what's next*.
+| # | Initiative | Status |
+|---|---|---|
+| [01](01-windows-support.md) | Windows support for the control actions | planned |
